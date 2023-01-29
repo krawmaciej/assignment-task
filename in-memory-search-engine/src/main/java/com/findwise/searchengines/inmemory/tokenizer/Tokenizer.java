@@ -1,6 +1,7 @@
 package com.findwise.searchengines.inmemory.tokenizer;
 
 import java.util.Set;
+import java.util.function.Predicate;
 import java.util.regex.Pattern;
 import java.util.stream.Collectors;
 
@@ -19,6 +20,7 @@ public class Tokenizer {
      */
     public Set<Token> tokenize(String content) {
         return NON_WORD_SPLIT.splitAsStream(content.trim())
+                .filter(Predicate.not(String::isBlank))
                 .map(String::toLowerCase)
                 .collect(Collectors.groupingBy(id -> id, Collectors.counting()))
                 .entrySet()

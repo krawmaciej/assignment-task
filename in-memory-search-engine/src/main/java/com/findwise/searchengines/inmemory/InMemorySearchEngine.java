@@ -12,12 +12,13 @@ import java.util.List;
 import java.util.Set;
 import java.util.concurrent.ConcurrentHashMap;
 
-
 /**
  * Thread-safe in memory implementation of {@link SearchEngine}.
  *
  * <p>This search engine does not support updating the index and will throw
  * a {@link DuplicateDocumentIdException} when document with the same id was already indexed.
+ *
+ * <p>This search engine will also not search through documents that consist only of non-word tokens.
  */
 public class InMemorySearchEngine implements SearchEngine {
 
@@ -33,7 +34,7 @@ public class InMemorySearchEngine implements SearchEngine {
         Set<Token> tokens = tokenizer.tokenize(content);
 
         if (tokens.isEmpty()) {
-            return; // don't index document without meaningful tokens
+            return; // don't index document without meaningful tokens to avoid division by 0
         }
 
         long totalCount = tokens.stream().mapToLong(Token::count).sum();

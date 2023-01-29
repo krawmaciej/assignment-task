@@ -76,7 +76,7 @@ class InMemorySearchEngineTest {
 
         // when
         corpus.forEach(inMemorySearchEngine::indexDocument);
-        List<TfIdfIndexEntry> searchResults = inMemorySearchEngine.search(searchedTerm);
+        List<IndexEntry> searchResults = inMemorySearchEngine.search(searchedTerm);
 
         // then
         assertEquals(expectedResults, searchResults);
@@ -88,7 +88,7 @@ class InMemorySearchEngineTest {
         InMemorySearchEngine inMemorySearchEngine = new InMemorySearchEngine();
 
         // when
-        List<TfIdfIndexEntry> searchResults = inMemorySearchEngine.search("anything");
+        List<IndexEntry> searchResults = inMemorySearchEngine.search("anything");
 
         // then
         assertEquals(Collections.emptyList(), searchResults);
@@ -103,7 +103,7 @@ class InMemorySearchEngineTest {
         inMemorySearchEngine.indexDocument("doc1", " ");
         inMemorySearchEngine.indexDocument("doc2", "");
         inMemorySearchEngine.indexDocument("doc3", "    ");
-        List<TfIdfIndexEntry> searchResults = inMemorySearchEngine.search("anything");
+        List<IndexEntry> searchResults = inMemorySearchEngine.search("anything");
 
         // then
         assertEquals(Collections.emptyList(), searchResults);
